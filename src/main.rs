@@ -1,7 +1,20 @@
-mod app;
+mod components;
+mod player;
+mod sys;
+use bevy::prelude::*;
+use player::PlayerBundle;
 
 fn main() {
-    let my_app = app::App::default();
-
-
+    let mut app = App::new();
+    app.add_plugins(DefaultPlugins);
+    app.add_systems(Startup, (
+        sys::init::spawn_camera,
+        sys::init::spawn_players,   
+    ));
+    app.add_systems(Update, (
+        sys::rendering::render_paddles
+    ));
+    app.run();
 }
+
+
